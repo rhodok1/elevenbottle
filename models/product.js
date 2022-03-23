@@ -11,12 +11,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Product.hasOne(models.Order)
     }
   }
   Product.init({
-    name: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
-    price: DataTypes.FLOAT
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    stock: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    price: {
+      allowNull: false,
+      type: DataTypes.FLOAT,
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    category: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
   }, {
     sequelize,
     modelName: 'Product',

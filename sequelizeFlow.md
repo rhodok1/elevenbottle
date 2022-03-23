@@ -12,18 +12,15 @@
 - Tambah allowNull:false ke semua
 
 (Add Column FK) Template di docs create table
-- npx sequelize-cli migration:generate --name add-ProductId-to-ProductDetails
 - npx sequelize-cli migration:generate --name add-UserId-to-Orders
 - npx sequelize-cli migration:generate --name add-ProductId-to-Orders
 - User.hasMany(models.Order)
 - Order.belongsTo(models.User)
 - Order.belongsTo(models.Product)
 - Product.hasOne(models.Order)
-- Product.hasOne(models.ProductDetail)
-- ProductDetail.belongsTo(models.Product)
 
 - dalam file migration nambah Key di dalam queryInterface Up: Nama Table, Nama kolom, objek lsg(Option) 
-- Optionnya ada type data, references with model dan key, onUpdate, onDelete
+- Optionnya ada type data, references with model (kenama Table pake S) dan key, onUpdate, onDelete
 
 - npx sequelize-cli db:migrate
 

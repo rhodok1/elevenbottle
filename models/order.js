@@ -11,15 +11,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Order.belongsTo(models.User)
+      Order.belongsTo(models.Product)
     }
   }
   Order.init({
-    shippingAddress: DataTypes.TEXT,
-    orderDate: DataTypes.DATE,
-    ordernum: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
-    quantity: DataTypes.INTEGER,
-    totalPrice: DataTypes.FLOAT
+    shippingAddress: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    shippingAddress: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    orderDate: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    ordernum: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    status: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN
+    },
+    quantity: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    totalPrice: {
+      allowNull: false,
+      type: DataTypes.FLOAT
+    },
   }, {
     sequelize,
     modelName: 'Order',
