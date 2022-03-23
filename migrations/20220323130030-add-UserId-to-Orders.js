@@ -13,7 +13,7 @@ module.exports = {
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down(queryInterface, Sequelize) {
     return queryInterface.addColumn("Orders", "UserId");
   },
 };

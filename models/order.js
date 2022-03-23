@@ -44,6 +44,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.FLOAT
     },
+    UserId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id",
+      },
+      onUpdate: "cascade",
+      onDelete: "cascade",
+    },
+    ProductId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Products",
+        key: "id",
+      },
+      onUpdate: "cascade",
+      onDelete: "cascade",
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Order',
