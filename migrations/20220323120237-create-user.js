@@ -9,16 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       role: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
