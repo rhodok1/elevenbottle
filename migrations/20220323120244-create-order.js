@@ -9,28 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       shippingAddress: {
-        allowNull: false,
         type: Sequelize.TEXT
       },
       orderDate: {
-        allowNull: false,
         type: Sequelize.DATE
       },
-      ordernum: {
-        allowNull: false,
+      orderNum: {
         type: Sequelize.STRING
       },
       status: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
       quantity: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       totalPrice: {
-        allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

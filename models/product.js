@@ -12,12 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.hasOne(models.Order)
+      Product.belongsTo(models.Category)
     }
   }
   Product.init({
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: 'Name is required'
+        },
+        notEmpty: {
+          msg: 'Name cannot be empty'
+        }
+      }
     },
     stock: {
       allowNull: false,
@@ -25,24 +34,37 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       allowNull: false,
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          msg: 'Price is required'
+        },
+        notEmpty: {
+          msg: 'Price cannot be empty'
+        },
+        min: 5
+      }
     },
     description: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      validate: {
+        notNull: {
+          msg: 'Description is required'
+        },
+        notEmpty: {
+          msg: 'Description cannot be empty'
+        }
+      }
     },
-    category: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  createdAt: {
-    allowNull: false,
-    type: DataTypes.DATE
-  },
-  updatedAt: {
-    allowNull: false,
-    type: DataTypes.DATE
-  }
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Product',

@@ -18,31 +18,43 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     shippingAddress: {
       allowNull: false,
-      type: DataTypes.TEXT
-    },
-    shippingAddress: {
-      allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      validate: {
+        notNull: {
+          msg: 'Shipping address is required'
+        },
+        notEmpty: {
+          msg: 'Shipping address cannot be empty'
+        }
+      }
     },
     orderDate: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    ordernum: {
+    orderNum: {
       allowNull: false,
       type: DataTypes.STRING
     },
     status: {
       allowNull: false,
-      type: DataTypes.BOOLEAN
+      type: DataTypes.STRING
     },
     quantity: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          msg: 'Quantity is required'
+        },
+        notEmpty: {
+          msg: 'Quantity cannot be empty'
+        }
+      }
     },
     totalPrice: {
       allowNull: false,
-      type: DataTypes.FLOAT
+      type: DataTypes.INTEGER
     },
     UserId: {
       allowNull: false,
