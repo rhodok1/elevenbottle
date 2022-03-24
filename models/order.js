@@ -13,17 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.User);
       Order.belongsTo(models.Product);
     }
-
-    formatDate(val) {
-      let yyyy = val.getFullYear()
-      let mm = val.getMonth() + 1
-      let dd = val.getDate()
-    
-      if (dd < 10) dd = '0' + dd
-      if (mm < 10) mm = '0' + mm
-    
-      return `${yyyy}-${mm}-${dd}`
-    }
   }
   Order.init(
     {
@@ -98,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Order",
       hooks: {
         beforeCreate: order => {
-          order.orderDate = order.formatDate(new Date())
+          order.orderDate = new Date()
           order.status = 'pending'
           order.orderNum = 'example'
         },
