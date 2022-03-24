@@ -35,7 +35,11 @@ class Controller {
             if(user) {
                 const isValidPassword = bcrypt.compareSync(password, user.password)
                 if (isValidPassword) {
-                    return res.redirect("/")
+                    if (user.role === "admin") {
+                        return res.redirect(`/admin/${user.id}`)
+                    } else {
+                        return res.redirect(`/user/${user.id}`)
+                    }
                 } else {
                     const error = "invalid username or password"
                     return res.redirect(`/login?error=${error}`)
@@ -45,6 +49,14 @@ class Controller {
         .catch(err => {
             res.send(err)
         })
+    }
+    static admin(req, res) {
+        const {id} = req.params
+        console.log(req.params);
+    }
+    static user(req, res) {
+        const {id} = req.params
+        console.log(req.params);
     }
 }
 
