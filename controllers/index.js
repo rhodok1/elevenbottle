@@ -39,7 +39,8 @@ class Controller {
   }
 
   static loginPageGet(req, res) {
-    res.render("login");
+    const {error} = req.query
+    res.render("login", {error});
   }
 
   static loginPagePost(req, res) {
