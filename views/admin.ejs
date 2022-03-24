@@ -24,13 +24,13 @@
         <td><%= el.name %></td>
         <td><%= el.Category.name %></td>
         <td><%= el.ProductDetail.description %></td>
-        <td><%= el.price %></td>
+        <td>$<%= el.price %></td>
         <td><%= el.stock %></td>
         <td>
           <% if(+el.stock === 0) { %>
-          <a href="/admin/delete/<%= el.id %>">Delete Product</a><br />
+          <a href="/admin/deleteProduct/<%= el.id %>">Delete Product</a><br />
           <% } %>
-          <a href="/admin/edit/<%= el.id %>">Edit Product</a><br />
+          <a href="/admin/editProduct/<%= el.id %>">Edit Product</a><br />
         </td>
       </tr>
       <% }) %>

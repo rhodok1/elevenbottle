@@ -71,7 +71,7 @@ router.post(
 router.get(
   "/admin/deleteProduct/:productId",
   authenticatedAdmin,
-  Controller.admin
+  Controller.delete
 );
 
 router.get("/user", authenticatedUser, Controller.user);

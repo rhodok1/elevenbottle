@@ -216,6 +216,10 @@ class Controller {
     })
   }
 
+  static delete(req, res) {
+    console.log(req.query);
+  }
+
   static logout(req, res) {
     req.session.destroy(() => {
       res.redirect("/");
