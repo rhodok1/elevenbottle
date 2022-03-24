@@ -1,4 +1,5 @@
 const { Order, Product, User } = require('../models');
+const bcrypt = require('bcryptjs');
 
 class Controller {
     static home(req, res) {
@@ -23,7 +24,27 @@ class Controller {
         .catch((err) => {
             res.send(err)
         })
-
+    }
+    static loginPage(req, res) {
+        res.render("login")
+    }
+    static login(req, res) {
+        const {email, password} = req.body
+        User.findOne({where: {email}})
+        .then(user => {
+            if(user) {
+                const isValidPassword = bcrypt.compareSync(password, user.password)
+                if (isValidPassword) {
+                    return res.redirect("/")
+                } else {
+                    const error = "invalid username or password"
+                    return res.redirect(`/login?error=${error}`)
+                }
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
     }
 }
 

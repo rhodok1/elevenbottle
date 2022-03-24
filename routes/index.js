@@ -5,8 +5,8 @@ const Controller = require("../controllers");
 router.get("/", Controller.home)
 router.get("/register", Controller.registerForm)
 router.post("/register", Controller.register)
-router.get("/login", Controller.home)
-router.post("/login", Controller.home)
+router.get("/login", Controller.loginPage)
+router.post("/login", Controller.login)
 
 
 module.exports = router
