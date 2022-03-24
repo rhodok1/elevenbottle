@@ -64,6 +64,16 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE
+    },
+    CategoryId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Categories",
+        key: "id",
+      },
+      onUpdate: "cascade",
+      onDelete: "cascade",
     }
   }, {
     sequelize,
