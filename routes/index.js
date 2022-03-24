@@ -74,18 +74,10 @@ router.get(
   Controller.admin
 );
 
-<<<<<<< HEAD
-router.get("/user/", authenticatedUser, Controller.user);
-
-router.get("/user/product/:productId", authenticatedUser, Controller.userProductDetails);
-
-router.post("/user/product/:productId/order", authenticatedUser, Controller.userBuyPost);
-=======
 router.get("/user", authenticatedUser, Controller.user);
 
 router.get('/user/product/:productId', Controller.userProductDetails)
 
 router.post('/user/product/:productId/order', Controller.userBuyPost)
->>>>>>> 45e5d44de71f440d1c6c18f2e181459bf2e729bc
 
 module.exports = router;
