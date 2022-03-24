@@ -9,8 +9,7 @@
   <body>
     <nav>
       <a href="/">HomePage</a>
-      <a href="/register">Register</a>
-      <a href="/login">Login</a>
+      <a href="/logout">Log Out</a>
     </nav><br>
 
     <div>
@@ -34,6 +33,20 @@
           <td><%= product.stock %></td>
         </tr>
       </table>
+
+      <div>
+        <form action="/user/<%= userId %>/product/<%= product.id %>/order" method="post">
+          <p><b>Price: </b><%= product.price %></p>
+
+          <label><b>Quantity</b></label><br>
+          <input type="number" name="quantity" placeholder="1"><br><br>
+
+          <label><b>Shipping Address</b></label><br>
+          <textarea name="shippingAddress" id="shippingAddress" cols="30" rows="10"></textarea><br><br>
+
+          <button type="submit">Buy</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

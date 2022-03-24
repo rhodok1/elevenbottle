@@ -7,18 +7,24 @@
     <title>Login Page</title>
   </head>
   <body>
-    <a href="/">HomePage</a><br />
-    <a href="/register">Register</a><br />
-    <h1>Login</h1>
+    <div>
+      <a href="/">HomePage</a>
+      <a href="/register">Register</a>
+    </div>
+
+    <div>
+      <h1>Login</h1>
+    </div>
+
     <% if(error) { %>
         <p style="color: red;"><%= error %></p>       
     <% } %>
     <form action="/login" method="post">
       <label>Email</label><br />
-      <input type="text" name="email" /><br />
+      <input type="text" name="email" /><br><br>
 
       <label>Password</label><br />
-      <input type="password" name="password" /><br />
+      <input type="password" name="password" /><br><br>
 
       <input type="submit" value="Submit" />
     </form>

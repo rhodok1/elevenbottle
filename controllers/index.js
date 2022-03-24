@@ -111,12 +111,31 @@ class Controller {
   }
 
   static user(req, res) {
-    const { id } = req.params;
+    const { userId } = req.params;
     Product.findAll({
+      exclude: ["createdAt", "updatedAt", "description", "CategoryId"],
+    })
+      .then((data) => {
+				let userData =  User.findByPk(+userId, {
+					include: ['Order', 'Product']
+				})
+				return { data, ...userData }
+      })
+			.then((data) => {
+				res.render("user", { data, userId });
+			})
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+
+	static userProductDetails(req, res) {
+		const { userId, productId } = req.params;
+    Product.findByPk(+productId, {
       include: [
         {
           model: ProductDetail,
-          attributes: ["description", "id"],
+          attributes: ["description"],
         },
         {
           model: Category,
@@ -126,35 +145,50 @@ class Controller {
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
-    }).then((data) => {
-      res.render("user", { data, id });
-    });
-  }
+    })
+      .then((product) => {
+        res.render("userproductdetails", { product, userId });
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+	}
+
+	static userBuyPost(req, res) {
+		const { userId, productId }	 = req.params
+		const { shippingAddress, quantity } = req.body
+		Product.findByPk(+productId, {
+			attributes: ['price']
+		})
+			.then((product) => {
+				const newOrder = {
+					shippingAddress,
+					quantity: +quantity,
+					totalPrice: product.price * +quantity,
+					UserId: +userId,
+					ProductId: +productId
+				}
+				return Order.create(newOrder)
+			})
+			.then((order) => {
+				console.log(order);
+				// res.redirect("/order/:orderId");
+			})
+			.catch((err) => {
+				if (err.name === "SequelizeValidationError") {
+					const errors = err.errors.map((el) => el.message);
+					res.send(errors);
+				} else {
+					res.send(err);
+				}
+			});
+	}
+
   static logout(req, res) {
     req.session.destroy(() => {
       res.redirect("/");
     });
   }
-
-  static userBuyGet(req, res) {
-    const { userId, productId } = req.params;
-    Product.findByPk(+productId, {
-      exclude: ["createdAt", "updatedAt"],
-    })
-      .then((product) => {
-        res.render("buy", { userId, product });
-      })
-      .catch((err) => {
-        if (err.name === "SequelizeValidationError") {
-          const errors = err.errors.map((el) => el.message);
-          res.send(errors);
-        } else {
-          res.send(err);
-        }
-      });
-  }
-
-  static userBuyPost(req, res) {}
 }
 
 module.exports = Controller;
