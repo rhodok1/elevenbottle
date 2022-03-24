@@ -45,15 +45,15 @@ const authenticatedAdmin = (req, res, next) => {
 router.get("/admin", authenticatedAdmin, Controller.admin);
 
 router.get(
-  "/admin/addProduct/:productId",
+  "/admin/addProduct/",
   authenticatedAdmin,
-  Controller.admin
+  Controller.addProductForm
 );
 
 router.post(
-  "/admin/addProduct/:productId",
+  "/admin/addProduct/",
   authenticatedAdmin,
-  Controller.admin
+  Controller.addProduct
 );
 
 router.get(

@@ -187,6 +187,35 @@ class Controller {
 			});
 	}
 
+  static addProductForm(req, res) {
+    res.render("addProduct")
+  }
+
+  static addProduct(req, res) {
+    console.log(req.body);
+    const {name, stock, price, description, CategoryId} = req.body
+    const newProduct = {
+      name,
+      stock,
+      price,
+      CategoryId
+    }
+    Product.create(newProduct)
+    .then(product => {
+      const newProductDetail = {
+        description,
+        ProductId: product.id
+      }
+      ProductDetail.create(newProductDetail)
+    })
+    .then(() => {
+      res.redirect("/admin")
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+
   static logout(req, res) {
     req.session.destroy(() => {
       res.redirect("/");

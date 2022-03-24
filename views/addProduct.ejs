@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AddProduct</title>
+  </head>
+  <body>
+    <div>
+      <a href="/">HomePage</a>
+      <a href="/admin">Admin</a>
+    </div>
+
+    <div>
+      <h1>AddProduct</h1>
+    </div>
+
+    <form action="/admin/addProduct" method="post">
+      <label>Name</label><br />
+      <input type="text" name="name" /><br /><br />
+
+      <label>Stock</label><br />
+      <input type="number" name="stock" /><br /><br />
+
+      <label>Price</label><br />
+      <input type="number" name="price" /><br /><br />
+
+      <label>ProductDetail</label><br />
+      <textarea name="description" rows="4" cols="50"></textarea><br /><br />
+
+      <label>Category</label><br />
+      <select name="CategoryId">
+        <option value="" selected disabled>Select One</option>
+        <option value="1">Red</option>
+        <option value="2">White</option>
+        <option value="3">Rose</option></select
+      ><br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

@@ -8,7 +8,7 @@
   </head>
   <body>
     <a href="/logout/">logout</a><br />
-    <a href="/admin/add/<%= id %>">Add Product</a><br />
+    <a href="/admin/addProduct/">Add Product</a><br />
     <h1>Eleven Bottles</h1>
     <table border="2">
       <tr>
@@ -28,10 +28,9 @@
         <td><%= el.stock %></td>
         <td>
           <% if(+el.stock === 0) { %>
-          <a href="/admin/<%= id %>/delete/<%= el.id %>">Delete Product</a
-          ><br />
+          <a href="/admin/delete/<%= el.id %>">Delete Product</a><br />
           <% } %>
-          <a href="/admin/<%= id %>/edit/<%= el.id %>">Edit Product</a><br />
+          <a href="/admin/edit/<%= el.id %>">Edit Product</a><br />
         </td>
       </tr>
       <% }) %>
