@@ -216,8 +216,22 @@ class Controller {
     })
   }
 
+  static editProductForm(req, res) {
+    const {productId} = req.params
+    res.render("editProduct")
+  }
+
   static delete(req, res) {
-    console.log(req.query);
+    const {productId} = req.params
+    Product.destroy({
+      where: {
+        id: productId
+      }
+    })
+    .then(() => {
+      res.redirect("/admin")
+    })
+    .catch(err => res.send(err))
   }
 
   static logout(req, res) {
