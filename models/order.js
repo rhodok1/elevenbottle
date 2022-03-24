@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { user } = require("../controllers");
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     /**
@@ -87,6 +88,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Order",
+      hooks: {
+        beforeValidate(order, options) {
+          order.createdAt = order.updatedAt = order.orderDate = new Date();
+          order.status = 'pending'
+          order.orderNum = 'example'
+        },
+      }
     }
   );
   return Order;
