@@ -13,6 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.User);
       Order.belongsTo(models.Product);
     }
+
+    formatDate(val) {
+      let yyyy = val.getFullYear()
+      let mm = val.getMonth() + 1
+      let dd = val.getDate()
+    
+      if (dd < 10) dd = '0' + dd
+      if (mm < 10) mm = '0' + mm
+    
+      return `${yyyy}-${mm}-${dd}`
+    }
   }
   Order.init(
     {
@@ -29,15 +40,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       orderDate: {
-        allowNull: false,
         type: DataTypes.DATE,
       },
       orderNum: {
-        allowNull: false,
         type: DataTypes.STRING,
       },
       status: {
-        allowNull: false,
         type: DataTypes.STRING,
       },
       quantity: {
@@ -89,10 +97,10 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Order",
       hooks: {
-        beforeValidate(order, options) {
-          order.createdAt = order.updatedAt = order.orderDate = new Date();
-          order.status = "pending";
-          order.orderNum = "example";
+        beforeCreate: order => {
+          order.orderDate = order.formatDate(new Date())
+          order.status = 'pending'
+          order.orderNum = 'example'
         },
       },
     }
