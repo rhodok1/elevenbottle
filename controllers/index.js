@@ -1,6 +1,18 @@
 const { Order, Product, User, ProductDetail, Category } = require("../models");
 const bcrypt = require("bcryptjs");
 const formatDate = require('../helpers');
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'emaildummyjiwo@gmail.com',
+    pass: 'a1a1a1__'
+  }
+});
+
+
+
+
 
 class Controller {
   static home(req, res) {
@@ -54,7 +66,20 @@ class Controller {
     };
     User.create(newUser)
       .then(() => {
-        res.redirect("/login");
+				let mailOptions = {
+					from: 'emaildummyjiwo@gmail.com',
+					to: email,
+					subject: 'Welcome to Eleven Bottles!',
+					text: 'Thank you for registering!'
+				};
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+				}); 
+				res.redirect("/login");
       })
       .catch((err) => {
         if (err.name === "SequelizeValidationError") {
