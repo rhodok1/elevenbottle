@@ -218,7 +218,45 @@ class Controller {
 
   static editProductForm(req, res) {
     const {productId} = req.params
-    res.render("editProduct")
+    Product.findOne({
+      where: {
+        id: productId
+      },
+      include: ProductDetail 
+    })
+    .then(product => {
+      res.render("editProduct", {product})
+    })
+    .catch(err => res.send(err))
+  }
+
+  static editProduct(req, res) {
+    const {productId} = req.params
+    const {name, stock, price, description, CategoryId} = req.body
+
+    Product.update({
+      name,
+      stock,
+      price,
+      CategoryId
+    }, {
+      where: {
+        id: productId
+      }
+    })
+    .then(product => {
+      ProductDetail.update({description}, {
+        where: {
+          id: productId
+        }
+      })
+    })
+    .then(() => {
+      res.redirect("/admin")
+    })
+    .catch(err => {
+      res.send(err)
+    })
   }
 
   static delete(req, res) {

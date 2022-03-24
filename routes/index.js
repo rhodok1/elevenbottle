@@ -65,7 +65,7 @@ router.get(
 router.post(
   "/admin/editProduct/:productId",
   authenticatedAdmin,
-  Controller.admin
+  Controller.editProduct
 );
 
 router.get(
