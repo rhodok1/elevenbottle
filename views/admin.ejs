@@ -7,8 +7,11 @@
     <title>HomePage</title>
   </head>
   <body>
-    <a href="/logout/">logout</a><br />
-    <a href="/admin/addProduct/">Add Product</a><br />
+    <div>
+      <a href="/logout/">Log Out</a>
+      <a href="/admin/addProduct/">Add Product</a>
+    </div>
+
     <h1>Eleven Bottles</h1>
     <table border="2">
       <tr>
@@ -19,12 +22,12 @@
         <th>Stock</th>
         <th>Action</th>
       </tr>
-      <% data.forEach(el => { %>
+      <% products.forEach(el => { %>
       <tr>
         <td><%= el.name %></td>
         <td><%= el.Category.name %></td>
         <td><%= el.ProductDetail.description %></td>
-        <td>$<%= el.price %></td>
+        <td><%= el.formatPrice() %></td>
         <td><%= el.stock %></td>
         <td>
           <% if(+el.stock === 0) { %>
@@ -33,6 +36,38 @@
           <a href="/admin/editProduct/<%= el.id %>">Edit Product</a><br />
         </td>
       </tr>
+      <% }) %>
+    </table><br><br>
+
+    <table border="2">
+      <tr>
+        <th>User Id</th>
+        <th>Order Number</th>
+        <th>Shipping Address</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Order Date</th>
+        <th>Action</th>
+      </tr>
+      <% ordersUsersProducts.forEach(el => { %>
+        <% if (el.status === 'pending') { %>
+          <tr>
+            <td><%= el.User.id %></td>
+            <td><%= el.id %></td>
+            <td><%= el.shippingAddress %></td>
+            <td><%= el.Product.name %></td>
+            <td><%= el.quantity %></td>
+            <td><%= el.formatTotalPrice() %></td>
+            <td><%= el.status %></td>
+            <td><%= formatDate(el.orderDate) %></td>
+            <td>
+              <a href="/admin/approve/<%= el.id %>">approve</a>
+              <a href="/admin/reject/<%= el.id %>">reject</a>
+            </td>
+          </tr>
+        <% } %> 
       <% }) %>
     </table>
   </body>

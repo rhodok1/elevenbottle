@@ -31,14 +31,14 @@
           <td><%= product.name %></td>
           <td><%= product.Category.name %></td>
           <td><%= product.ProductDetail.description %></td>
-          <td><%= product.price %></td>
+          <td><%= product.formatPrice() %></td>
           <td><%= product.stock %></td>
         </tr>
       </table>
 
       <div>
         <form action="/user/product/<%= product.id %>/order" method="post">
-          <p><b>Price: </b>$<%= product.price %></p>
+          <p><b>Price: </b><%= product.formatPrice() %></p>
 
           <label><b>Quantity</b></label
           ><br />

@@ -13,6 +13,21 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.User);
       Order.belongsTo(models.Product);
     }
+
+    formatTotalPrice() {
+      return `$${this.totalPrice}`
+    }
+
+    static orderNum() {
+      let day = new Date()
+      let yyyy = day.getFullYear()
+      let mm = day.getMonth() + 1
+      let dd = day.getDate()
+      let hours = day.getHours()
+      let minutes = day.getMinutes()
+    
+      return `${yyyy}_${mm}_${dd}_${hours}_${minutes}`
+    }
   }
   Order.init(
     {
@@ -89,7 +104,7 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate: order => {
           order.orderDate = new Date()
           order.status = 'pending'
-          order.orderNum = 'example'
+          order.orderNum = Order.orderNum()
         },
       },
     }

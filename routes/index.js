@@ -74,6 +74,10 @@ router.get(
   Controller.delete
 );
 
+router.get('/admin/approve/:orderId', Controller.approve)
+
+router.get('/admin/reject/:orderId', Controller.reject)
+
 router.get("/user", authenticatedUser, Controller.user);
 
 router.get('/user/product/:productId', Controller.userProductDetails)
