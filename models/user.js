@@ -1,9 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,71 +11,76 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Order)
+      User.hasMany(models.Order);
     }
   }
-  User.init({
-    email: {
-      allowNull: false,
-      unique: true,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: `Email is required`
+  User.init(
+    {
+      email: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: `Email is required`,
+          },
+          notEmpty: {
+            msg: "Email cannot be empty",
+          },
+          isEmail: {
+            msg: "Invalid email format",
+          },
         },
-        notEmpty: {
-          msg: 'Email cannot be empty'
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Password is required",
+          },
+          notEmpty: {
+            msg: "Password cannot be empty",
+          },
+          passwordLength(val) {
+            if (val.length < 8 && val.length !== 0) {
+              throw new Error(
+                "Password has not reached minimum characters of 8"
+              );
+            }
+          },
         },
-        isEmail: {
-          msg: 'Invalid email format'
-        }
-      }
+      },
+      role: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validation: {
+          notNull: {
+            msg: "Please choose a role",
+          },
+        },
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: 'Password is required'
+    {
+      hooks: {
+        beforeCreate(user, options) {
+          const salt = bcrypt.genSaltSync(10);
+          const hash = bcrypt.hashSync(user.password, salt);
+          user.password = hash;
+          user.createdAt = user.updatedAt = new Date();
         },
-        notEmpty: {
-          msg: 'Password cannot be empty'
-        },
-        passwordLength(val) {
-          if (val.length < 8 && val.length !== 0) {
-            throw new Error('Password has not reached minimum characters of 8')
-          }
-        }
-      }
-    },
-    role: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validation: {
-        notNull: {
-          msg: 'Please choose a role'
-        },
-      }
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
+      },
+      sequelize,
+      modelName: "User",
     }
-  }, {
-    hooks: {
-      beforeCreate(user, options) {
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(user.password, salt)
-        user.password = hash
-        user.createdAt = user.updatedAt = new Date()
-      }
-    },
-    sequelize,
-    modelName: 'User',
-  });
+  );
   return User;
 };
