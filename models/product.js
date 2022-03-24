@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     formatPrice() {
-      return `$${this.price}`
+      return `$${this.price}`;
     }
   }
   Product.init(

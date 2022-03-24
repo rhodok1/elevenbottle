@@ -37,7 +37,8 @@
         </td>
       </tr>
       <% }) %>
-    </table><br><br>
+    </table>
+    <br /><br />
 
     <table border="2">
       <tr>
@@ -51,24 +52,23 @@
         <th>Order Date</th>
         <th>Action</th>
       </tr>
-      <% ordersUsersProducts.forEach(el => { %>
-        <% if (el.status === 'pending') { %>
-          <tr>
-            <td><%= el.User.id %></td>
-            <td><%= el.id %></td>
-            <td><%= el.shippingAddress %></td>
-            <td><%= el.Product.name %></td>
-            <td><%= el.quantity %></td>
-            <td><%= el.formatTotalPrice() %></td>
-            <td><%= el.status %></td>
-            <td><%= formatDate(el.orderDate) %></td>
-            <td>
-              <a href="/admin/approve/<%= el.id %>">approve</a>
-              <a href="/admin/reject/<%= el.id %>">reject</a>
-            </td>
-          </tr>
-        <% } %> 
-      <% }) %>
+      <% ordersUsersProducts.forEach(el => { %> <% if (el.status === 'pending')
+      { %>
+      <tr>
+        <td><%= el.User.id %></td>
+        <td><%= el.id %></td>
+        <td><%= el.shippingAddress %></td>
+        <td><%= el.Product.name %></td>
+        <td><%= el.quantity %></td>
+        <td><%= el.formatTotalPrice() %></td>
+        <td><%= el.status %></td>
+        <td><%= formatDate(el.orderDate) %></td>
+        <td>
+          <a href="/admin/approve/<%= el.id %>">approve</a>
+          <a href="/admin/reject/<%= el.id %>">reject</a>
+        </td>
+      </tr>
+      <% } %> <% }) %>
     </table>
   </body>
 </html>

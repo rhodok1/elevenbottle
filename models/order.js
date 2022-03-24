@@ -15,18 +15,18 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     formatTotalPrice() {
-      return `$${this.totalPrice}`
+      return `$${this.totalPrice}`;
     }
 
     static orderNum() {
-      let day = new Date()
-      let yyyy = day.getFullYear()
-      let mm = day.getMonth() + 1
-      let dd = day.getDate()
-      let hours = day.getHours()
-      let minutes = day.getMinutes()
-    
-      return `${yyyy}_${mm}_${dd}_${hours}_${minutes}`
+      let day = new Date();
+      let yyyy = day.getFullYear();
+      let mm = day.getMonth() + 1;
+      let dd = day.getDate();
+      let hours = day.getHours();
+      let minutes = day.getMinutes();
+
+      return `${yyyy}_${mm}_${dd}_${hours}_${minutes}`;
     }
   }
   Order.init(
@@ -101,10 +101,10 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Order",
       hooks: {
-        beforeCreate: order => {
-          order.orderDate = new Date()
-          order.status = 'pending'
-          order.orderNum = Order.orderNum()
+        beforeCreate: (order) => {
+          order.orderDate = new Date();
+          order.status = "pending";
+          order.orderNum = Order.orderNum();
         },
       },
     }
