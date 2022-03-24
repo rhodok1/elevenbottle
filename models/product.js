@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Product.hasOne(models.Order)
       Product.belongsTo(models.Category)
+      Product.hasOne(models.ProductDetail)
     }
   }
   Product.init({
@@ -43,18 +44,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Price cannot be empty'
         },
         min: 5
-      }
-    },
-    description: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-      validate: {
-        notNull: {
-          msg: 'Description is required'
-        },
-        notEmpty: {
-          msg: 'Description cannot be empty'
-        }
       }
     },
     createdAt: {
