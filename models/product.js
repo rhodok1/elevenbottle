@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsTo(models.Category);
       Product.hasOne(models.ProductDetail);
     }
+
+    formatPrice() {
+      return `$${this.price}`
+    }
   }
   Product.init(
     {

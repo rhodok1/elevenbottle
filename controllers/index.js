@@ -5,6 +5,7 @@ const formatDate = require('../helpers');
 class Controller {
   static home(req, res) {
     Product.findAll({
+			order: [['price', 'ASC']],
       exclude: ["createdAt", "updatedAt", "description", "CategoryId"],
     })
       .then((products) => {
@@ -104,16 +105,82 @@ class Controller {
 
   static admin(req, res) {
     const { id } = req.params;
+		let products = null
+		let ordersUsersProducts = null
     Product.findAll({
-      include: [ProductDetail, Category],
+			order: [['price', 'ASC']],
+      include: ['ProductDetail', 'Category'],
     }).then((data) => {
-      res.render("admin", { data, id });
-    });
+			products = data
+			return Order.findAll({
+				order: [['id', 'ASC']],
+				include: ['User', 'Product'],
+			})
+    }).then((data) => {
+			ordersUsersProducts = data
+		}).then(() => {
+      res.render("admin", { products, ordersUsersProducts, formatDate });
+		})
   }
+
+	static approve(req, res) {
+		const { orderId } = req.params
+		let orderData = null
+		Order.findByPk(+orderId)
+			.then((data) => {
+				orderData = data
+				return Order.update({
+					status: 'approved'
+				}, {
+					where: {
+						id: orderId
+					}
+				})
+			})
+			.then(() => {
+				return Product.findByPk(orderData.ProductId)
+			})
+			.then((product) => {
+				Product.update({
+					stock: product.stock - orderData.quantity,
+				}, {
+					where: {
+						id: product.id
+					}
+				})
+			})
+			.then(() => {
+				res.redirect('/admin')
+			})
+			.catch((err) => {
+				res.send(err)
+			})
+	}
+
+	static reject(req, res) {
+		const { orderId } = req.params
+		Order.findByPk(+orderId)
+			.then(() => {
+				return Order.update({
+					status: 'rejected'
+				}, {
+					where: {
+						id: orderId
+					}
+				})
+			})
+			.then(() => {
+				res.redirect('/admin')
+			})
+			.catch((err) => {
+				res.send(err)
+			})
+	}
 
   static user(req, res) {
 		let products = null
     Product.findAll({
+			order: [['price', 'ASC']],
       exclude: ["createdAt", "updatedAt", "description", "CategoryId"],
     })
       .then((data) => {
@@ -122,7 +189,8 @@ class Controller {
 					where: {
 						UserId: req.session.user.id
 					},
-					include: Product
+					include: Product,
+					order: [['status', 'ASC']],
 				})
       })
 			.then((orders) => {
