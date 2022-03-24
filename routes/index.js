@@ -4,6 +4,8 @@ const Controller = require("../controllers");
 
 router.get("/", Controller.home);
 
+router.get('/product/:productId', Controller.productDetails)
+
 router.get("/register", Controller.registerFormGet);
 
 router.post("/register", Controller.registerFormPost);
@@ -25,5 +27,9 @@ router.post("/admin/:id/edit/:productId", Controller.admin);
 router.get("/admin/:id/delete/:productId", Controller.admin);
 
 router.get("/user/:id", Controller.user);
+
+router.get("/order/:userId/buy/:productId", Controller.userBuyGet);
+
+router.post("/order/:userId/buy/:productId", Controller.userBuyPost);
 
 module.exports = router;
