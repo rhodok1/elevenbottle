@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+</head>
+<body>
+    <a href="/admin/add/<%= id %>">Add Product</a><br>
+    <h1>Eleven Bottles</h1>
+    <table border="2">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Product Details</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Action</th>
+        </tr>
+        <% data.forEach(el => { %>            
+            <tr>
+              <td><%= el.name %></td>
+              <td><%= el.Category.name %></td>
+              <td><%= el.ProductDetail.description %></td>
+              <td><%= el.price %></td>
+              <td><%= el.stock %></td>
+              <td><% if(+el.stock === 0) { %>
+                <a href="/admin/<%= id %>/delete/<%= el.id %>">Delete Product</a><br>
+              <% } %>
+              <a href="/admin/<%= id %>/edit/<%= el.id %>">Edit Product</a><br>
+              </td>
+            </tr>
+        <% }) %>
+      </table>
+</body>
+</html>

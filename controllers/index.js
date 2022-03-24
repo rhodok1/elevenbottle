@@ -1,9 +1,17 @@
-const { Order, Product, User } = require('../models');
+const { Order, Product, User, ProductDetail, Category } = require('../models');
 const bcrypt = require('bcryptjs');
 
 class Controller {
     static home(req, res) {
-        res.render("home")
+        Product.findAll({
+            include: [ProductDetail, Category]
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.Category);
+            console.log(data.ProductDetail);
+            res.render("home", {data})
+        })
     }
     static registerForm(req, res) {
         res.render("register")
@@ -52,11 +60,21 @@ class Controller {
     }
     static admin(req, res) {
         const {id} = req.params
-        console.log(req.params);
+        Product.findAll({
+            include: [ProductDetail, Category]
+        })
+        .then((data) => {
+            res.render("admin", {data, id})
+        })
     }
     static user(req, res) {
         const {id} = req.params
-        console.log(req.params);
+        Product.findAll({
+            include: [ProductDetail, Category]
+        })
+        .then((data) => {
+            res.render("user", {data, id})
+        })
     }
 }
 
