@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Password cannot be empty'
         },
         passwordLength(val) {
-          if (val.length < 8) {
+          if (val.length < 8 && val.length !== 0) {
             throw new Error('Password has not reached minimum characters of 8')
           }
         }
@@ -52,7 +52,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validation: {
+        notNull: {
+          msg: 'Please choose a role'
+        },
+      }
     },
     createdAt: {
       allowNull: false,
@@ -68,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(user.password, salt)
         user.password = hash
+        user.createdAt = user.updatedAt = new Date()
       }
     },
     sequelize,
