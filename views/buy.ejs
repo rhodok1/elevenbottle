@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy Now</title>
-</head>
-<body>
-  <a href="/">HomePage</a><br>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Now</title>
+  </head>
+  <body>
+    <a href="/">HomePage</a><br />
 
-  <div>
-    <h1>Eleven Bottles</h1>
-  </div>
+    <div>
+      <h1>Eleven Bottles</h1>
+    </div>
 
-  <div>
-    <form action="/order/<%= userId %>/buy/<%= product.id %>" method="post">
-      <label>Quantity</label><br>
-      <input type="number" name="quantity" /><br>
+    <div>
+      <form action="/order/<%= userId %>/buy/<%= product.id %>" method="post">
+        <label>Quantity</label><br />
+        <input type="number" name="quantity" /><br />
 
-      <p><b>Price: </b><%= product.price %></p><br>
+        <p><b>Price: </b><%= product.price %></p>
+        <br />
 
-      <label>Shipping Address</label><br>
-      <textarea name="shippingAddress" id="shippingAddress" cols="30" rows="10"></textarea>
+        <label>Shipping Address</label><br />
+        <textarea
+          name="shippingAddress"
+          id="shippingAddress"
+          cols="30"
+          rows="10"
+        ></textarea>
 
-      <input type="submit" value="Buy Now" />
-    </form>
-  </div>
-</body>
+        <input type="submit" value="Buy Now" />
+      </form>
+    </div>
+  </body>
 </html>

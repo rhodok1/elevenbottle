@@ -91,10 +91,10 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeValidate(order, options) {
           order.createdAt = order.updatedAt = order.orderDate = new Date();
-          order.status = 'pending'
-          order.orderNum = 'example'
+          order.status = "pending";
+          order.orderNum = "example";
         },
-      }
+      },
     }
   );
   return Order;
