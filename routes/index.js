@@ -52,6 +52,10 @@ router.post("/admin/editProduct/:productId", authenticatedAdmin, Controller.admi
 
 router.get("/admin/deleteProduct/:productId", authenticatedAdmin, Controller.admin);
 
-router.get("/user/:id", authenticatedUser, Controller.user);
+router.get("/user/:userId", authenticatedUser, Controller.user);
+
+router.get('/user/:userId/product/:productId', Controller.userProductDetails)
+
+router.post('/user/:userId/product/:productId/order', Controller.userBuyPost)
 
 module.exports = router;
