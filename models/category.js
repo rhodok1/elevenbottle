@@ -12,22 +12,25 @@ module.exports = (sequelize, DataTypes) => {
       Category.hasMany(models.Product);
     }
   }
-  Category.init({
-    name: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: 'Category is required'
+  Category.init(
+    {
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Category is required",
+          },
+          notEmpty: {
+            msg: "Category cannot be empty",
+          },
         },
-        notEmpty: {
-          msg: 'Category cannot be empty'
-        }
-      }
+      },
     },
-  }, {
-    sequelize,
-    modelName: 'Category',
-  });
+    {
+      sequelize,
+      modelName: "Category",
+    }
+  );
   return Category;
 };

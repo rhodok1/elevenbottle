@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -11,62 +9,65 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.hasOne(models.Order)
-      Product.belongsTo(models.Category)
-      Product.hasOne(models.ProductDetail)
+      Product.hasOne(models.Order);
+      Product.belongsTo(models.Category);
+      Product.hasOne(models.ProductDetail);
     }
   }
-  Product.init({
-    name: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: 'Name is required'
+  Product.init(
+    {
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Name is required",
+          },
+          notEmpty: {
+            msg: "Name cannot be empty",
+          },
         },
-        notEmpty: {
-          msg: 'Name cannot be empty'
-        }
-      }
-    },
-    stock: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    price: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {
-          msg: 'Price is required'
-        },
-        notEmpty: {
-          msg: 'Price cannot be empty'
-        },
-        min: 5
-      }
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    CategoryId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Categories",
-        key: "id",
       },
-      onUpdate: "cascade",
-      onDelete: "cascade",
+      stock: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      price: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: {
+            msg: "Price is required",
+          },
+          notEmpty: {
+            msg: "Price cannot be empty",
+          },
+          min: 5,
+        },
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      CategoryId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      },
+    },
+    {
+      sequelize,
+      modelName: "Product",
     }
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
+  );
   return Product;
 };

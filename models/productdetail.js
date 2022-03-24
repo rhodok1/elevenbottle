@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class ProductDetail extends Model {
     /**
@@ -11,34 +9,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ProductDetail.belongsTo(models.Product)
+      ProductDetail.belongsTo(models.Product);
     }
   }
-  ProductDetail.init({
-    description: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-      validate: {
-        notNull: {
-          msg: 'Description is required'
+  ProductDetail.init(
+    {
+      description: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+        validate: {
+          notNull: {
+            msg: "Description is required",
+          },
+          notEmpty: {
+            msg: "Description cannot be empty",
+          },
         },
-        notEmpty: {
-          msg: 'Description cannot be empty'
-        }
-      }
-    },
-    ProductId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Products",
-        key: "id",
       },
-      onUpdate: "cascade",
-      onDelete: "cascade",
+      ProductId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Products",
+          key: "id",
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      },
+    },
+    {
+      sequelize,
+      modelName: "ProductDetail",
     }
-  }, {
-    sequelize,
-    modelName: 'ProductDetail',
-  });
+  );
   return ProductDetail;
 };
