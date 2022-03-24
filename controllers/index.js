@@ -6,9 +6,6 @@ class Controller {
     Product.findAll({
       include: [ProductDetail, Category],
     }).then((data) => {
-      console.log(data);
-      console.log(data.Category);
-      console.log(data.ProductDetail);
       res.render("home", { data });
     });
   }
@@ -52,8 +49,12 @@ class Controller {
         if (user) {
           const isValidPassword = bcrypt.compareSync(password, user.password);
           if (isValidPassword) {
+            req.session.user = {
+              id: user.id,
+              role: user.role
+            }
             if (user.role === "admin") {
-              return res.redirect(`/admin/${user.id}`);
+              return res.redirect("/admin");
             } else {
               return res.redirect(`/user/${user.id}`);
             }
@@ -61,6 +62,9 @@ class Controller {
             const error = "invalid username or password";
             return res.redirect(`/login?error=${error}`);
           }
+        } else {
+          const error = "invalid username or password";
+          return res.redirect(`/login?error=${error}`);
         }
       })
       .catch((err) => {
@@ -84,6 +88,11 @@ class Controller {
     }).then((data) => {
       res.render("user", { data, id });
     });
+  }
+  static logout(req, res) {
+    req.session.destroy(() => {
+      res.redirect("/")
+    })
   }
 }
 
