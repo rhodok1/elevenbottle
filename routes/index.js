@@ -12,4 +12,9 @@ router.get("/login", Controller.loginPageGet)
 
 router.post("/login", Controller.loginPagePost)
 
+router.get("/admin/:id", Controller.admin)
+
+router.get("/user/:id", Controller.user)
+
+
 module.exports = router
