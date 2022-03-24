@@ -8,7 +8,7 @@
   </head>
   <body>
     <nav>
-      <a href="/">HomePage</a>
+      <a href="/user">HomePage</a>
       <a href="/logout">Log Out</a>
     </nav>
     <br />
@@ -26,15 +26,7 @@
       </tr>
       <% products.forEach(product => { %>
       <tr>
-<<<<<<< HEAD
-        <td>
-          <a href="/user/<%= userId %>/product/<%= product.id %>"
-            ><%= product.name %></a
-          >
-        </td>
-=======
         <td><a href="/user/product/<%= product.id %>"><%= product.name %></a></td>
->>>>>>> 45e5d44de71f440d1c6c18f2e181459bf2e729bc
         <td><%= product.price %></td>
         <td><%= product.stock %></td>
       </tr>
@@ -60,7 +52,7 @@
         <td><%= order.quantity %></td>
         <td><%= order.totalPrice %></td>
         <td><%= order.status %></td>
-        <td><%= order.orderDate %></td>
+        <td><%= formatDate(order.orderDate) %></td>
       </tr>
       <% }) %>
     </table>

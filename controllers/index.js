@@ -1,5 +1,6 @@
 const { Order, Product, User, ProductDetail, Category } = require("../models");
 const bcrypt = require("bcryptjs");
+const formatDate = require('../helpers');
 
 class Controller {
   static home(req, res) {
@@ -125,7 +126,7 @@ class Controller {
 				})
       })
 			.then((orders) => {
-				res.render("user", { products, orders });
+				res.render("user", { products, orders, formatDate });
 			})
       .catch((err) => {
         res.send(err);
@@ -173,8 +174,7 @@ class Controller {
 				}
 				return Order.create(newOrder)
 			})
-			.then((order) => {
-				console.log(order);
+			.then(() => {
 				res.redirect('/user');
 			})
 			.catch((err) => {
