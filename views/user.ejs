@@ -22,9 +22,9 @@
         <th>Price</th>
         <th>Stock</th>
       </tr>
-      <% data.forEach(product => { %>
+      <% products.forEach(product => { %>
       <tr>
-        <td><a href="/user/<%= userId %>/product/<%= product.id %>"><%= product.name %></a></td>
+        <td><a href="/user/product/<%= product.id %>"><%= product.name %></a></td>
         <td><%= product.price %></td>
         <td><%= product.stock %></td>
       </tr>
@@ -41,15 +41,15 @@
         <th>Status</th>
         <th>Order Date</th>
       </tr>
-      <% data.forEach(data => { %>
+      <% orders.forEach(order => { %>
       <tr>
-        <td><%= data.Order.id %></td>
-        <td><%= data.Order.shippingAddress %></td>
-        <td><%= data.name %></td>
-        <td><%= data.Order.quantity %></td>
-        <td><%= data.Order.totalPrice %></td>
-        <td><%= data.Order.status %></td>
-        <td><%= data.Order.orderDate %></td>
+        <td><%= order.id %></td>
+        <td><%= order.shippingAddress %></td>
+        <td><%= order.Product.name %></td>
+        <td><%= order.quantity %></td>
+        <td><%= order.totalPrice %></td>
+        <td><%= order.status %></td>
+        <td><%= order.orderDate %></td>
       </tr>
       <% }) %>
     </table><br><br>

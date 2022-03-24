@@ -85,7 +85,7 @@ class Controller {
             if (user.role === "admin") {
               return res.redirect("/admin");
             } else {
-              return res.redirect(`/user/${user.id}`);
+              return res.redirect(`/user`);
             }
           } else {
             const error = "invalid username or password";
@@ -111,18 +111,21 @@ class Controller {
   }
 
   static user(req, res) {
-    const { userId } = req.params;
+		let products = null
     Product.findAll({
       exclude: ["createdAt", "updatedAt", "description", "CategoryId"],
     })
       .then((data) => {
-				let userData =  User.findByPk(+userId, {
-					include: ['Order', 'Product']
+				products = data
+				return Order.findAll({
+					where: {
+						UserId: req.session.user.id
+					},
+					include: Product
 				})
-				return { data, ...userData }
       })
-			.then((data) => {
-				res.render("user", { data, userId });
+			.then((orders) => {
+				res.render("user", { products, orders });
 			})
       .catch((err) => {
         res.send(err);
@@ -155,7 +158,7 @@ class Controller {
 	}
 
 	static userBuyPost(req, res) {
-		const { userId, productId }	 = req.params
+		const { productId }	 = req.params
 		const { shippingAddress, quantity } = req.body
 		Product.findByPk(+productId, {
 			attributes: ['price']
@@ -165,14 +168,14 @@ class Controller {
 					shippingAddress,
 					quantity: +quantity,
 					totalPrice: product.price * +quantity,
-					UserId: +userId,
+					UserId: req.session.user.id,
 					ProductId: +productId
 				}
 				return Order.create(newOrder)
 			})
 			.then((order) => {
 				console.log(order);
-				// res.redirect("/order/:orderId");
+				res.redirect('/user');
 			})
 			.catch((err) => {
 				if (err.name === "SequelizeValidationError") {
